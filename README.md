@@ -1,7 +1,7 @@
 # CompilersUFABC
 ## Repository for the final project of the Compilers course at UFABC, 2024.
 
-Project Description:
+#### Project Description:
 
 
 Asterisco *: significa zero ou muitas ocorrências do que vem antes.
@@ -42,3 +42,6 @@ Expr -> Expr + Termo | Expr - Termo | Termo
 Expr -> Expr + Termo | Expr - Termo | Termo * Fator | Termo / Fator | Fator
 Expr -> Expr + Termo | Expr - Termo | Termo * Fator | Termo / Fator | Num | Id
 Obs: Expr recebe Termo e Fator 
+
+
+![REQUISITOS PROJETO](https://github.com/user-attachments/assets/659ce0c8-273f-4e38-bfe9-2f0465b4a3cd)
