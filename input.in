@@ -1,0 +1,17 @@
+begin
+	let text a, b;
+	let number teste;
+	
+	let text a;
+	
+	23 + 3 + teste;
+	
+	b = 23;
+	
+	c = 1 + 2 + 3 + b;
+	print(c);
+	read(a);
+	print("Hello World");
+	print(a);
+	
+end
