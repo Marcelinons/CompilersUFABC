@@ -3,6 +3,8 @@ package compiler.main;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import compiler.core.ProjGramParser;
+import compiler.core.types.Types;
+import compiler.core.types.Variable;
 import compiler.core.ProjGramLexer;
 
 
@@ -11,6 +13,16 @@ public class Main {
 		try {
 			ProjGramLexer lexer;
 			ProjGramParser parser;
+//			Variable var;
+//	
+//			var = new Variable();
+//			
+//			var.setId("TESTE");
+//			var.setType(Types.FLOAT);
+//			var.setValue(23 + 24.2);
+//			
+//			System.out.println(var.toString());
+//			System.out.println(var.getValue());
 			
 			lexer = new ProjGramLexer(CharStreams.fromFileName("input.in"));
 			

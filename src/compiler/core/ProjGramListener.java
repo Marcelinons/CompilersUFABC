@@ -4,6 +4,7 @@ package compiler.core;
 	import java.util.ArrayList;
 	import java.util.HashMap;
 	import compiler.core.types.*;
+	import compiler.core.exceptions.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -73,25 +74,25 @@ public interface ProjGramListener extends ParseTreeListener {
 	 */
 	void exitCmdWrite(ProjGramParser.CmdWriteContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#expr}.
+	 * Enter a parse tree produced by {@link ProjGramParser#num_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(ProjGramParser.ExprContext ctx);
+	void enterNum_expr(ProjGramParser.Num_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#expr}.
+	 * Exit a parse tree produced by {@link ProjGramParser#num_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(ProjGramParser.ExprContext ctx);
+	void exitNum_expr(ProjGramParser.Num_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#termo}.
+	 * Enter a parse tree produced by {@link ProjGramParser#num_term}.
 	 * @param ctx the parse tree
 	 */
-	void enterTermo(ProjGramParser.TermoContext ctx);
+	void enterNum_term(ProjGramParser.Num_termContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#termo}.
+	 * Exit a parse tree produced by {@link ProjGramParser#num_term}.
 	 * @param ctx the parse tree
 	 */
-	void exitTermo(ProjGramParser.TermoContext ctx);
+	void exitNum_term(ProjGramParser.Num_termContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#expr_md}.
 	 * @param ctx the parse tree
@@ -122,4 +123,14 @@ public interface ProjGramListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInstruction_block(ProjGramParser.Instruction_blockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumber(ProjGramParser.NumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumber(ProjGramParser.NumberContext ctx);
 }

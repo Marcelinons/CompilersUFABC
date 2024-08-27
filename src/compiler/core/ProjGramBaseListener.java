@@ -4,6 +4,7 @@ package compiler.core;
 	import java.util.ArrayList;
 	import java.util.HashMap;
 	import compiler.core.types.*;
+	import compiler.core.exceptions.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -94,25 +95,25 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(ProjGramParser.ExprContext ctx) { }
+	@Override public void enterNum_expr(ProjGramParser.Num_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(ProjGramParser.ExprContext ctx) { }
+	@Override public void exitNum_expr(ProjGramParser.Num_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTermo(ProjGramParser.TermoContext ctx) { }
+	@Override public void enterNum_term(ProjGramParser.Num_termContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTermo(ProjGramParser.TermoContext ctx) { }
+	@Override public void exitNum_term(ProjGramParser.Num_termContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -149,6 +150,18 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInstruction_block(ProjGramParser.Instruction_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumber(ProjGramParser.NumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumber(ProjGramParser.NumberContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
