@@ -95,73 +95,37 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNum_expr(ProjGramParser.Num_exprContext ctx) { }
+	@Override public void enterExpression(ProjGramParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNum_expr(ProjGramParser.Num_exprContext ctx) { }
+	@Override public void exitExpression(ProjGramParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNum_term(ProjGramParser.Num_termContext ctx) { }
+	@Override public void enterTerm(ProjGramParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNum_term(ProjGramParser.Num_termContext ctx) { }
+	@Override public void exitTerm(ProjGramParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_md(ProjGramParser.Expr_mdContext ctx) { }
+	@Override public void enterExpression_md(ProjGramParser.Expression_mdContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr_md(ProjGramParser.Expr_mdContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRepetition(ProjGramParser.RepetitionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRepetition(ProjGramParser.RepetitionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterInstruction_block(ProjGramParser.Instruction_blockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInstruction_block(ProjGramParser.Instruction_blockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNumber(ProjGramParser.NumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumber(ProjGramParser.NumberContext ctx) { }
+	@Override public void exitExpression_md(ProjGramParser.Expression_mdContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

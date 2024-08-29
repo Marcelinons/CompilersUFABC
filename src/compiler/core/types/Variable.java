@@ -7,7 +7,8 @@ import compiler.core.exceptions.SemanticException;
  */
 public class Variable {
 	private String id;
-	private Types type;	
+	private Types type;
+	private boolean initialized;
 	private Object value;
 	
 	/**
@@ -66,14 +67,14 @@ public class Variable {
 			} else { 
 				throw new IllegalArgumentException("Type mismatch 1.");
 			}
-		case FLOAT:
-			if (value instanceof Float || value instanceof Double) {
+		case DOUBLE:
+			if (value instanceof Double || value instanceof Float) {
 				this.value = value;
 				break;
-			} else {
-				throw new IllegalArgumentException("Type mismatch 2 .");
+			} else { 
+				throw new IllegalArgumentException("Type mismatch 2.");
 			}
-		case TEXT:
+		case STRING:
 			if (value instanceof String) {
 				this.value = value;
 				break;
@@ -92,9 +93,9 @@ public class Variable {
 	 		switch (this.type) {
 	 		case INT:
 	 			return (Integer) this.value;
-	 		case FLOAT:
+	 		case DOUBLE:
 	 			return (Double) this.value;
-	 		case TEXT:
+	 		case STRING:
 	 			return (String) this.value;
 	 		default:
 	 			return null;
@@ -102,11 +103,17 @@ public class Variable {
  		} else throw new SemanticException(this.id+" has not been initialized.");
  	}
 	
+ 	public boolean isInitialized() {
+		return initialized;
+	}
+
+	public void setInitialized(boolean initialized) {
+		this.initialized = initialized;
+	}
 	
 	@Override
 	public String toString() {
-		return "Variable [id=" + id + ", type=" + type + ", value = " + value + "]";
+		return "Variable [id= " + id + ", type= " + type + ", initialized = " + initialized + "]";
 	}
-	
-	
+
 }

@@ -1,17 +1,21 @@
-begin
-	let text a, b;
-	let number teste;
+BEGIN
+	LET STRING a, texto;
+	LET INT b;
+	LET DOUBLE c, d;
+		
+	b = 23 - 2;
+	a = 233 + 12 * b;
+	a = a + "234";
 	
-	let text a;
+	b = 33;
+	c = 2.2;
 	
-	23 + 3 + teste;
-	
-	b = 23;
-	
-	c = 1 + 2 + 3 + b;
-	print(c);
 	read(a);
-	print("Hello World");
-	print(a);
 	
-end
+	read(c);
+	
+	print(a);
+	print(b);
+	print(c);
+		
+END

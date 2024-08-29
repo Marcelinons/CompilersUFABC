@@ -34,6 +34,8 @@ public class Main {
 			parser.program();
 			System.out.println("Done.");
 			parser.showVariables();
+			
+			parser.declaredNotUsed();
 		}
 		catch(Exception e) {
 			System.out.println(e.toString());

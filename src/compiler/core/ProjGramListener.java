@@ -74,63 +74,33 @@ public interface ProjGramListener extends ParseTreeListener {
 	 */
 	void exitCmdWrite(ProjGramParser.CmdWriteContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#num_expr}.
+	 * Enter a parse tree produced by {@link ProjGramParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterNum_expr(ProjGramParser.Num_exprContext ctx);
+	void enterExpression(ProjGramParser.ExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#num_expr}.
+	 * Exit a parse tree produced by {@link ProjGramParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitNum_expr(ProjGramParser.Num_exprContext ctx);
+	void exitExpression(ProjGramParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#num_term}.
+	 * Enter a parse tree produced by {@link ProjGramParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterNum_term(ProjGramParser.Num_termContext ctx);
+	void enterTerm(ProjGramParser.TermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#num_term}.
+	 * Exit a parse tree produced by {@link ProjGramParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitNum_term(ProjGramParser.Num_termContext ctx);
+	void exitTerm(ProjGramParser.TermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#expr_md}.
+	 * Enter a parse tree produced by {@link ProjGramParser#expression_md}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_md(ProjGramParser.Expr_mdContext ctx);
+	void enterExpression_md(ProjGramParser.Expression_mdContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#expr_md}.
+	 * Exit a parse tree produced by {@link ProjGramParser#expression_md}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_md(ProjGramParser.Expr_mdContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#repetition}.
-	 * @param ctx the parse tree
-	 */
-	void enterRepetition(ProjGramParser.RepetitionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#repetition}.
-	 * @param ctx the parse tree
-	 */
-	void exitRepetition(ProjGramParser.RepetitionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#instruction_block}.
-	 * @param ctx the parse tree
-	 */
-	void enterInstruction_block(ProjGramParser.Instruction_blockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#instruction_block}.
-	 * @param ctx the parse tree
-	 */
-	void exitInstruction_block(ProjGramParser.Instruction_blockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#number}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumber(ProjGramParser.NumberContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#number}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumber(ProjGramParser.NumberContext ctx);
+	void exitExpression_md(ProjGramParser.Expression_mdContext ctx);
 }
