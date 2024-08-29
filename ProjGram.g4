@@ -8,82 +8,66 @@ grammar ProjGram;
 }
 
 @members {
-    private HashMap<String, Variable> varMap = new HashMap<String, Variable>();
+    private HashMap<String, Variable> symbolTable = new HashMap<String, Variable>();
     private ArrayList<Variable> currentDecl = new ArrayList<Variable>();
-    
-    private Types currentType;
+    private Types currentType, leftType=null, rightType=null;
     
     public void updateType() {
     	for(Variable v: currentDecl){
     	   v.setType(currentType);
-    	   varMap.put(v.getId(), v);
+    	   symbolTable.put(v.getId(), v);
     	}
     }
     
-    public void updateValue(String id, String value) {
-    	if (isString(value)) {
-		  varMap.get(id).setValue((String)value);
-    	} else if (isInteger(value)) {
-    	  varMap.get(id).setValue(Integer.parseInt(value));
-    	} else if (isFloat(value)) {
-    	  varMap.get(id).setValue(Double.parseDouble(value));
+    /**
+    * Returns all declared IDs that have not been used on the program
+    */
+    public void declaredNotUsed() {
+    	boolean first = true;
+    	for (String id: symbolTable.keySet()) {
+    	    if (!symbolTable.get(id).isInitialized()) {
+    	      if (first) { 
+    	        System.out.print("\nWarning: the following variables have not been used: \n[");
+    	        first = false;
+    	      }
+    	      System.out.print(symbolTable.get(id).getId()+", ");
+    	    }
     	}
+    	if (!first) System.out.println("]");
     }
     
+    /**
+    * Prints all of declared variables
+    */
     public void showVariables(){
-        for (String id: varMap.keySet()){
-        	System.out.println(varMap.get(id));
+        for (String id: symbolTable.keySet()){
+        	System.out.println(symbolTable.get(id));
         }
     }
     
-    // Variavel declarada returns True
+    /**
+    * Checks if given Id is declared
+    */
     public boolean isDeclared(String id) {
-    	return varMap.get(id) != null;
+    	return symbolTable.get(id) != null;
     }
     
-    // Checar tipo de variavel
-    public boolean typeMatch(String id, String value) {    	
-    	if (varMap.get(id) == null) {return false;} 
-    	Types tipo_var = varMap.get(id).getType();
-    	
-    	if (value.matches("[0-9]+") && (tipo_var == Types.INT)) {;
-    		return true;
-    	}
-    	else if (value.matches("[0-9]+ ('.' [0-9]+ )?") && (tipo_var == Types.FLOAT)) {
-    		return true;
-    	}
-    	else if (value.matches("\"([a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-')* \"") && (tipo_var == Types.TEXT) ) {
-    		return true;
-    	}
-    	else {return false;}	
-    }
-    
-    // Checa se eh inteiro
-    public boolean isInteger(String value) {
-    	if (value.matches("[0-9]+")) {;
-    		return true;
-    	} else return false;
-    }
-    
-    // Checa se eh float
-    public boolean isFloat(String value) {
+    /**
+    * Checks if given value is of type INT
+    */
+    public boolean isNumeric(String value) {
     	if (value.matches("-?\\d*(\\.\\d+)?")) {
     		return true;
     	} else return false;
     }
     
     /**
-    * Verifica se um valor eh uma string
+    * Checks if a given value is of type STRING
     */
     public boolean isString(String value) {
     	if (value.matches("^\".*\"$")) {
     		return true;
     	} else return false;
-    }
-    
-    public boolean isNumber(String value) {
-    	if (isFloat(value) || isInteger(value)) return true;
-    	else return false;
     }
 }
 
@@ -95,47 +79,54 @@ grammar ProjGram;
 program  
     : 'BEGIN' 
       declare_var+ 
-      ((command | num_expr) PV)+
+      (command | expression)+
       'END'
     ;
 
 // Declaracao de variaveis		
 declare_var	
     : 'LET' { currentDecl.clear(); } 
-	  ('INT' {currentType = Types.INT;} 
-       | 'TEXT' {currentType = Types.TEXT;} 
-       | 'FLOAT' {currentType = Types.FLOAT;}
+	  (  'INT' {currentType = Types.INT;} 
+       | 'STRING' {currentType = Types.STRING;} 
+       | 'DOUBLE' {currentType = Types.DOUBLE;}
       )
 	  ID { if (isDeclared(_input.LT(-1).getText())) {
-	           throw new SemanticException(_input.LT(-1).getText()+" is already declared.");
+	           throw new SemanticException(_input.LT(-1).getText()+" has already been declared.");
 	       }
 	     } 
 	     { currentDecl.add(new Variable(_input.LT(-1).getText())); }
 	  
 	  (VIRG ID { currentDecl.add(new Variable(_input.LT(-1).getText()));} )*	 
 	  {updateType();}
-	  PV 
+	  PV
     ;		
 
 // Linha de codigo
 command
-	: cmdAttrib
-	| cmdRead
-	| cmdWrite
+	: ( cmdAttrib
+	   | cmdRead
+	   | cmdWrite
+	  )
+	  PV
 	;
 
 // Atribuicao/Inicializacao de variavel
 cmdAttrib
 	: ID { 
-		String curr_id = _input.LT(-1).getText();
-	    if (!isDeclared(curr_id)) {
+	    String curr_id = _input.LT(-1).getText();
+	    if ( !isDeclared(curr_id) ) {
 	      throw new SemanticException(curr_id+" has not been declared.");
 	    }
-	    currentType = varMap.get(curr_id).getType();
+	    leftType = symbolTable.get(curr_id).getType();
 	  }
 	  ATTRIBUTION
-	  ( num_expr | TEXTO ) { 
-	    updateValue(curr_id, _input.LT(-1).getText()); }
+	  ( expression | STRING ) {
+	  	if (leftType.getValue() < rightType.getValue()) {
+	  	  throw new TypeMismatchException(symbolTable.get(curr_id).getId()+" expected "+leftType+". Received "+rightType+".");
+	  	}
+	  	symbolTable.get(curr_id).setInitialized(true);
+		leftType = rightType = null;
+	  }
 	;
 
 // Ler do teclado
@@ -149,46 +140,80 @@ cmdRead
 	   CLOSE_PAREN
 	;
 
-// Print na tela
+// Print
 cmdWrite
-	: 'print' OPEN_PAREN (num_expr | TEXTO)+ CLOSE_PAREN
+	: 'print' 
+	  OPEN_PAREN 
+	  (ID { 
+	     if ( !isDeclared(_input.LT(-1).getText()) ) {
+	       throw new SemanticException(_input.LT(-1).getText()+" has not been declared.");
+	     } 
+	     if ( !symbolTable.get(_input.LT(-1).getText()).isInitialized() ) {
+	       throw new SemanticException(_input.LT(-1).getText()+" has no value associated with it.");
+	     }
+	   } 
+	   | expression
+	  ) CLOSE_PAREN
 	;
 
-// Expressao aritmetica
-num_expr
-    : num_term expr_md 
+// Numeric arithmetic expression
+expression
+    : term expression_md 
 	;
 
-// Termo de expressao
-num_term		
+term		
     : ID { 
         if ( !isDeclared(_input.LT(-1).getText()) ) {
 		  throw new SemanticException(_input.LT(-1).getText()+" has not been declared.");
+	    } 
+	    if ( !symbolTable.get(_input.LT(-1).getText()).isInitialized() ) {
+	      throw new SemanticException(_input.LT(-1).getText()+" has no value associated with it.");
 	    }
-	    if ( !isInteger(_input.LT(-1).getText()) || !isFloat(_input.LT(-1).getText()) ) {
-	      throw new TypeMismatchException(_input.LT(-1).getText()+" is of type "+ varMap.get(_input.LT(-1).getText()).getType() +". INT or FLOAT expected.");
+	    if ( rightType == null ) {
+	      rightType = symbolTable.get(_input.LT(-1).getText()).getType();
+	    } else {
+	      if (symbolTable.get(_input.LT(-1).getText()).getType().getValue() > rightType.getValue()) {
+	        rightType = symbolTable.get(_input.LT(-1).getText()).getType();
+	      }
 	    }
 	  }
-    | number
+	  
+    | INT { 
+        if ( rightType == null ) {
+	      rightType = Types.INT;
+	    } else { 
+	      if (rightType.getValue() < Types.INT.getValue()) {
+	        rightType = Types.INT;
+	      }
+	    } 
+	  }
+	  
+	| DOUBLE {
+		if ( rightType == null ) {
+		  rightType = Types.DOUBLE;
+		} else {
+		  if (rightType.getValue() < Types.DOUBLE.getValue()) {
+		    rightType = Types.DOUBLE;
+		  }
+		}
+	}
+	  
+	| STRING {
+	    if ( rightType == null ) {
+	      rightType = Types.STRING;
+	    } else { 
+	      if (rightType.getValue() < Types.STRING.getValue()) {
+	        rightType = Types.STRING;
+	      }
+	    }
+	  } 
     ;
-
-// Meio / continuacao da expressao		
-expr_md		
-    : ( OP  num_term) *
+    	
+expression_md	
+    : (OP  term) *
 	;	
 
-// Bloco de repeticao 
-repetition
-    : 'while' OPEN_PAREN (ID | number) LOG_OP (ID | number) CLOSE_PAREN OPEN_CB instruction_block CLOSE_CB
-    ;
 
-instruction_block
-    : num_expr PV 
-    ;
-
-number
-	: (INT | FLOAT)
-	;
 
 // Regras lexicas
 
@@ -196,8 +221,7 @@ ATTRIBUTION : '='
             ;
 
 TYPE		: 'INT' {currentType = Types.INT;} 
-              | 'TEXT' {currentType = Types.TEXT;} 
-              | 'FLOAT' {currentType = Types.FLOAT;}
+              | 'STRING' {currentType = Types.STRING;} 
 			;
 			
 LOG_OP      : '<' | '<=' | '>' | '>=' | '==' | '<>'
@@ -221,10 +245,10 @@ OP          : '+' | '*' | '/' | '-' | '**'
 ID			: [a-z] ( [a-z] | [A-Z] | [0-9] )*		
 			;
 	
-INT 		: [0-9]+
+INT 		: '-'? [0-9]+
 			;
 			
-FLOAT       : [0-9]+ ('.' [0-9]+ )?
+DOUBLE     : '-'? [0-9]+ ('.' [0-9]+ )?
 			;
 			
 			
@@ -240,7 +264,7 @@ DP			: ':'
 WS			: (' ' | '\n' | '\r' | '\t' ) -> skip
 			;
 
-TEXTO		: '"'.*?'"'
+STRING		: '"'.*?'"'
 			;            
 
 
