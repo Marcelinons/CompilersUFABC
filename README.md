@@ -44,4 +44,4 @@ Expr -> Expr + Termo | Expr - Termo | Termo * Fator | Termo / Fator | Num | Id
 Obs: Expr recebe Termo e Fator 
 
 
-![REQUISITOS PROJETO](https://github.com/user-attachments/assets/659ce0c8-273f-4e38-bfe9-2f0465b4a3cd)
+![REQUISITOS PROJETO](https://github.com/user-attachments/assets/66716014-2741-49f8-9e64-94aaff88fbff)
