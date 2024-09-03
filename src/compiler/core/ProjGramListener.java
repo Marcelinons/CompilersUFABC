@@ -74,6 +74,36 @@ public interface ProjGramListener extends ParseTreeListener {
 	 */
 	void exitCmdWrite(ProjGramParser.CmdWriteContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#cmdIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdIf(ProjGramParser.CmdIfContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#cmdIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdIf(ProjGramParser.CmdIfContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#cmdWhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdWhile(ProjGramParser.CmdWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#cmdWhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdWhile(ProjGramParser.CmdWhileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#logical_expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogical_expression(ProjGramParser.Logical_expressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#logical_expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogical_expression(ProjGramParser.Logical_expressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#expression}.
 	 * @param ctx the parse tree
 	 */

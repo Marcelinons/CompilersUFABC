@@ -77,9 +77,10 @@ grammar ProjGram;
 
 // Bloco principal do programa
 program  
-    : 'BEGIN' 
+    : 'PROGRAM'
       declare_var+ 
-      (command | expression)+
+      'BEGIN' 
+      command+
       'END'
     ;
 
@@ -103,11 +104,12 @@ declare_var
 
 // Linha de codigo
 command
-	: ( cmdAttrib
+	:  cmdAttrib
 	   | cmdRead
 	   | cmdWrite
-	  )
-	  PV
+	   | cmdIf
+	   | cmdWhile
+	  
 	;
 
 // Atribuicao/Inicializacao de variavel
@@ -127,6 +129,7 @@ cmdAttrib
 	  	symbolTable.get(curr_id).setInitialized(true);
 		leftType = rightType = null;
 	  }
+	  PV
 	;
 
 // Ler do teclado
@@ -138,6 +141,7 @@ cmdRead
 	        }
 	      } 
 	   CLOSE_PAREN
+	   PV
 	;
 
 // Print
@@ -152,8 +156,38 @@ cmdWrite
 	       throw new SemanticException(_input.LT(-1).getText()+" has no value associated with it.");
 	     }
 	   } 
-	   | expression
-	  ) CLOSE_PAREN
+	   | expression {leftType = rightType = null;}
+	  ) 
+	  CLOSE_PAREN
+	  PV
+	;
+
+// Comando IF
+cmdIf
+	: 'if'
+	  OPEN_PAREN
+	  logical_expression
+	  CLOSE_PAREN
+	  OPEN_CB
+  	  ( command | expression ) +
+	  CLOSE_CB
+	  ('else' cmdIf)?
+	  ('else' OPEN_CB ( command | expression ) * CLOSE_CB)?
+	;
+
+// Comando while
+cmdWhile
+	: 'while'
+	  OPEN_PAREN
+	  logical_expression
+	  CLOSE_PAREN
+	  OPEN_CB
+  	  ( command | expression ) +
+	  CLOSE_CB
+	;
+
+logical_expression
+	: ( (expression | ID) LOG_OP (expression | ID) ( ('&&' | '||') (expression | ID) LOG_OP (expression | ID) )*? )
 	;
 
 // Numeric arithmetic expression

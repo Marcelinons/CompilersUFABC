@@ -30,9 +30,11 @@ public class Main {
 			
 			parser = new ProjGramParser(tokenStream);
 			
-			System.out.println("Compiling program...");
+			System.out.println("Compiling program...\n");
 			parser.program();
-			System.out.println("Done.");
+			System.out.println("Program compiled with no errors.\n");
+			
+			System.out.println("Variables: \n");
 			parser.showVariables();
 			
 			parser.declaredNotUsed();
