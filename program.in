@@ -1,0 +1,38 @@
+PROGRAM camilA
+	LET STRING nome, pares, impares;
+	LET INT idade, n, c, counter;
+	LET DOUBLE peso;
+BEGIN
+	nome = -3 + "Nicolas" + 22 ;
+	idade = 22;
+	peso = 56.3;
+	
+	n = 10;
+	c = 0;
+
+	if (idade % 2 == 0) {
+		println("Sua idade eh par!");
+	} else {
+		println("Sua idade eh impar!");
+	}
+	endif
+	
+	pares = "";
+	impares = "";
+	
+	while (c < n) {
+		c = c + 1;
+		if (c % 2 == 0) {
+		    pares = pares + c + ", ";
+		} else {
+			impares = impares + c + ", ";
+		}
+		endif
+	}
+	
+	print("Pares entre   "+c+" e "+n+": ");
+	println(pares);
+	print("Impares entre "+c+" e "+n+": ");
+	println(impares);
+	
+END

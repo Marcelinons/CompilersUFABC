@@ -3,7 +3,9 @@ grammar ProjGram;
 @header {
 	import java.util.ArrayList;
 	import java.util.HashMap;
+	import java.util.Stack;
 	import compiler.core.types.*;
+	import compiler.core.ast.*;
 	import compiler.core.exceptions.*;
 }
 
@@ -11,6 +13,13 @@ grammar ProjGram;
     private HashMap<String, Variable> symbolTable = new HashMap<String, Variable>();
     private ArrayList<Variable> currentDecl = new ArrayList<Variable>();
     private Types currentType, leftType=null, rightType=null;
+    private Program program = new Program();
+    private Stack<ArrayList<Command>> commandStack = new Stack<ArrayList<Command>>();
+    private String exprString;
+    
+    public Program getProgram() {
+    	return this.program;
+    }
     
     public void updateType() {
     	for(Variable v: currentDecl){
@@ -77,11 +86,14 @@ grammar ProjGram;
 
 // Bloco principal do programa
 program  
-    : 'PROGRAM'
+    : 'PROGRAM' ID { program.setName(_input.LT(-1).getText()); 
+                     commandStack.push(new ArrayList<Command>());
+                   }
       declare_var+ 
       'BEGIN' 
-      command+
-      'END'
+      command+ 
+      'END' { program.setSymbolTable(symbolTable);
+              program.setCommandList(commandStack.pop()); }
     ;
 
 // Declaracao de variaveis		
@@ -107,6 +119,7 @@ command
 	:  cmdAttrib
 	   | cmdRead
 	   | cmdWrite
+	   | cmdWrite_ln
 	   | cmdIf
 	   | cmdWhile
 	  
@@ -120,13 +133,16 @@ cmdAttrib
 	      throw new SemanticException(curr_id+" has not been declared.");
 	    }
 	    leftType = symbolTable.get(curr_id).getType();
+	    exprString = "";	 
 	  }
 	  ATTRIBUTION
-	  ( expression | STRING ) {
+	  ( expression ) {
 	  	if (leftType.getValue() < rightType.getValue()) {
 	  	  throw new TypeMismatchException(symbolTable.get(curr_id).getId()+" expected "+leftType+". Received "+rightType+".");
 	  	}
 	  	symbolTable.get(curr_id).setInitialized(true);
+	  	commandStack.peek().add(new AtribCommand(symbolTable.get(curr_id), rightType, exprString));
+	  	
 		leftType = rightType = null;
 	  }
 	  PV
@@ -139,60 +155,81 @@ cmdRead
 	   ID { if (!isDeclared(_input.LT(-1).getText())) {
 	          throw new SemanticException(_input.LT(-1).getText()+" has not been declared.");
 	        }
+	      symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
+	      
+	      InputCommand cmdInpt = new InputCommand(symbolTable.get(_input.LT(-1).getText()));
+	      commandStack.peek().add(cmdInpt);
 	      } 
 	   CLOSE_PAREN
 	   PV
 	;
 
 // Print
-cmdWrite
-	: 'print' 
+cmdWrite 
+	: 'print' {exprString = "";} 
 	  OPEN_PAREN 
-	  (ID { 
-	     if ( !isDeclared(_input.LT(-1).getText()) ) {
-	       throw new SemanticException(_input.LT(-1).getText()+" has not been declared.");
-	     } 
-	     if ( !symbolTable.get(_input.LT(-1).getText()).isInitialized() ) {
-	       throw new SemanticException(_input.LT(-1).getText()+" has no value associated with it.");
-	     }
-	   } 
-	   | expression {leftType = rightType = null;}
-	  ) 
+	  (expression {
+	     leftType = rightType = null;
+	     WriteCommand cmdWr = new WriteCommand(exprString);
+	     commandStack.peek().add(cmdWr);
+	  } ) 
+	  CLOSE_PAREN
+	  PV
+	;
+	
+cmdWrite_ln
+	: 'println' {exprString = "";}
+	  OPEN_PAREN 
+	  (expression {
+	     leftType = rightType = null;
+	     WriteLNCommand cmdWr = new WriteLNCommand(exprString);
+	     commandStack.peek().add(cmdWr);
+	  } ) 
 	  CLOSE_PAREN
 	  PV
 	;
 
 // Comando IF
 cmdIf
-	: 'if'
+	: 'if' { commandStack.push(new ArrayList<Command>());
+	         exprString = "";
+	         IfCommand cmdIf = new IfCommand();
+	       }
 	  OPEN_PAREN
-	  logical_expression
-	  CLOSE_PAREN
+	  expression { if (rightType == Types.STRING) {throw new SemanticException("expected INT or DOUBLE.");} }
+	  LOGIC_OP {exprString += " " + _input.LT(-1).getText();}
+	  expression { if (rightType == Types.STRING) {throw new SemanticException("expected INT or DOUBLE.");} }
+	  CLOSE_PAREN {cmdIf.setExpression(exprString);}
 	  OPEN_CB
-  	  ( command | expression ) +
+  	  command+ {cmdIf.setTrueList(commandStack.pop());}
 	  CLOSE_CB
-	  ('else' cmdIf)?
-	  ('else' OPEN_CB ( command | expression ) * CLOSE_CB)?
+	  ('else' OPEN_CB { commandStack.push(new ArrayList<Command>()); }
+	     command+ {cmdIf.setFalseList(commandStack.pop());} CLOSE_CB
+	  )?
+	  'endif'
+	  { commandStack.peek().add(cmdIf); }
 	;
 
 // Comando while
 cmdWhile
-	: 'while'
+	: 'while' { commandStack.push(new ArrayList<Command>());
+	            exprString = "";
+	            WhileCommand cmdWhile = new WhileCommand();
+	          }
 	  OPEN_PAREN
-	  logical_expression
-	  CLOSE_PAREN
+	  expression { if (rightType == Types.STRING) {throw new SemanticException("expected INT or DOUBLE.");} }
+	  LOGIC_OP {exprString += " " + _input.LT(-1).getText();}
+	  expression { if (rightType == Types.STRING) {throw new SemanticException("expected INT or DOUBLE.");} }
+	  CLOSE_PAREN { cmdWhile.setExpression(exprString); } 
 	  OPEN_CB
-  	  ( command | expression ) +
-	  CLOSE_CB
-	;
-
-logical_expression
-	: ( (expression | ID) LOG_OP (expression | ID) ( ('&&' | '||') (expression | ID) LOG_OP (expression | ID) )*? )
+  	  command+ { cmdWhile.setCommandList(commandStack.pop()); }
+	  CLOSE_CB 
+	  { commandStack.peek().add(cmdWhile); } 
 	;
 
 // Numeric arithmetic expression
 expression
-    : term expression_md 
+    : term { exprString += " " + _input.LT(-1).getText();  } expression_md 
 	;
 
 term		
@@ -244,7 +281,7 @@ term
     ;
     	
 expression_md	
-    : (OP  term) *
+    : (OP { exprString += " " + _input.LT(-1).getText();  }  term { exprString += " " + _input.LT(-1).getText();  } ) *
 	;	
 
 
@@ -258,7 +295,7 @@ TYPE		: 'INT' {currentType = Types.INT;}
               | 'STRING' {currentType = Types.STRING;} 
 			;
 			
-LOG_OP      : '<' | '<=' | '>' | '>=' | '==' | '<>'
+LOGIC_OP    : '<' | '<=' | '>' | '>=' | '==' | '!='
             ;
 
 OPEN_PAREN  : '('
@@ -273,7 +310,7 @@ OPEN_CB     : '{'
 CLOSE_CB    : '}'
             ;
 
-OP          : '+' | '*' | '/' | '-' | '**'
+OP          : '+' | '*' | '/' | '-' | '%'
 			;	
 
 ID			: [a-z] ( [a-z] | [A-Z] | [0-9] )*		

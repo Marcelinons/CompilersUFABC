@@ -3,7 +3,9 @@ package compiler.core;
 
 	import java.util.ArrayList;
 	import java.util.HashMap;
+	import java.util.Stack;
 	import compiler.core.types.*;
+	import compiler.core.ast.*;
 	import compiler.core.exceptions.*;
 
 
@@ -95,6 +97,18 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCmdWrite_ln(ProjGramParser.CmdWrite_lnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdWrite_ln(ProjGramParser.CmdWrite_lnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCmdIf(ProjGramParser.CmdIfContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -114,18 +128,6 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmdWhile(ProjGramParser.CmdWhileContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLogical_expression(ProjGramParser.Logical_expressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLogical_expression(ProjGramParser.Logical_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

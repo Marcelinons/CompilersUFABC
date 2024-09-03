@@ -1,11 +1,11 @@
 package compiler.core.ast;
 
-public class WriteCommand extends Command {
+public class WriteLNCommand extends Command {
 	private String content;
 	
 	@Override
 	public String generateTarget() {
-		return "System.out.print("+content+");\n";
+		return "System.out.println("+content+");\n";
 	}
 
 	public String getContent() {
@@ -16,12 +16,12 @@ public class WriteCommand extends Command {
 		this.content = content;
 	}
 
-	public WriteCommand(String content) {
+	public WriteLNCommand(String content) {
 		super();
 		this.content = content;
 	}
 
-	public WriteCommand() {
+	public WriteLNCommand() {
 		super();
 	}
 	

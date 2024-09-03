@@ -3,7 +3,9 @@ package compiler.core;
 
 	import java.util.ArrayList;
 	import java.util.HashMap;
+	import java.util.Stack;
 	import compiler.core.types.*;
+	import compiler.core.ast.*;
 	import compiler.core.exceptions.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -74,6 +76,16 @@ public interface ProjGramListener extends ParseTreeListener {
 	 */
 	void exitCmdWrite(ProjGramParser.CmdWriteContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#cmdWrite_ln}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdWrite_ln(ProjGramParser.CmdWrite_lnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#cmdWrite_ln}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdWrite_ln(ProjGramParser.CmdWrite_lnContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#cmdIf}.
 	 * @param ctx the parse tree
 	 */
@@ -93,16 +105,6 @@ public interface ProjGramListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdWhile(ProjGramParser.CmdWhileContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProjGramParser#logical_expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLogical_expression(ProjGramParser.Logical_expressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProjGramParser#logical_expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLogical_expression(ProjGramParser.Logical_expressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#expression}.
 	 * @param ctx the parse tree
