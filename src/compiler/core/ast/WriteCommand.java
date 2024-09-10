@@ -1,3 +1,7 @@
+/**
+ * Comando de print sem quebra de linha.
+ * */
+
 package compiler.core.ast;
 
 public class WriteCommand extends Command {

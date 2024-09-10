@@ -40,22 +40,25 @@ public class Main {
 			parser.program();
 			System.out.println("Program compiled with no errors.\n");
 			
-			// System.out.println("Variables: \n");
-			// parser.showVariables();
 			
-			// parser.declaredNotUsed();
+//			System.out.println("Expr Value: "+parser.generateValue());
+//			
+//			System.out.println("Json: " + parser.generateJson());
+//			
+//			System.out.println(parser.generateExpression());
+		
 			
 			/* ---- Code Generator ---- */
 			
 			Program program = parser.getProgram();
-			System.out.println(program.generateTarget());
+			// System.out.println(program.generateTarget());
 			try {
 				File f = new File(program.getName()+".java");
 				FileWriter fr = new FileWriter(f);
 				PrintWriter pr = new PrintWriter(fr);
 				pr.println(program.generateTarget());
 				pr.close();
-				
+				System.out.println(program.getName()+".java sucessfully written.");
 			} catch(IOException ex) {
 				ex.printStackTrace();
 			}

@@ -1,11 +1,15 @@
+/**
+ * 	Comando de atribuicao de valores
+ * */
+
 package compiler.core.ast;
 
 import compiler.core.types.*;
 
 public class AtribCommand extends Command {
-	private Variable var;
-	private Types atrbType;
-	private String expression;
+	private Variable var; 		// Variavel
+	private Types atrbType;		// Tipo da variavel
+	private String expression;  // Expressao a ser atribuida
 	
 	public AtribCommand() {
 		super();
@@ -53,13 +57,14 @@ public class AtribCommand extends Command {
 	public void setAtrbType(Types atrbType) {
 		this.atrbType = atrbType;
 	}
-
+	
 	@Override
 	public String generateTarget() {
 		StringBuilder str = new StringBuilder();
 		switch (var.getType()) {
 		case STRING:
-			str.append(var.getId() + " = " + expression.substring(1) + ";\n");
+			// Realiza a concatenacao dos elementos da String, sem muitos tratamentos.
+			str.append(var.getId() + " = \"" + expression.replaceAll("\"", "") + "\";\n");
 			break;
 		default:
 			str.append(var.getId() + " = " + expression + ";\n");

@@ -1,6 +1,5 @@
 package compiler.core.types;
 
-import compiler.core.exceptions.SemanticException;
 
 /**
  * DEFINES A VARIABLE CLASS
@@ -9,7 +8,7 @@ public class Variable {
 	private String id;
 	private Types type;
 	private boolean initialized;
-	private Object value;
+	// private Object value;
 	
 	/**
 	 * Initializes the variable with no ID nor type. */
@@ -56,52 +55,52 @@ public class Variable {
 		this.type = type;
 	}
 	
-	/**
-	 * Set variable's value */
-	public void setValue(Object value) {
-		switch (this.type) {
-		case INT:
-			if (value instanceof Integer) {
-				this.value = value;
-				break;
-			} else { 
-				throw new IllegalArgumentException("Type mismatch 1.");
-			}
-		case DOUBLE:
-			if (value instanceof Double || value instanceof Float) {
-				this.value = value;
-				break;
-			} else { 
-				throw new IllegalArgumentException("Type mismatch 2.");
-			}
-		case STRING:
-			if (value instanceof String) {
-				this.value = value;
-				break;
-			} else {
-				throw new IllegalArgumentException("Type mismatch 3 .");
-			}
-		default:
-			break;
-		}
-	}
-	
-	/**
-	 * Returns variable's value */
- 	public Object getValue() {
- 		if (this.value != null) {
-	 		switch (this.type) {
-	 		case INT:
-	 			return (Integer) this.value;
-	 		case DOUBLE:
-	 			return (Double) this.value;
-	 		case STRING:
-	 			return (String) this.value;
-	 		default:
-	 			return null;
-	 		}
- 		} else throw new SemanticException(this.id+" has not been initialized.");
- 	}
+//	/**
+//	 * Set variable's value */
+//	public void setValue(Object value) {
+//		switch (this.type) {
+//		case INT:
+//			if (value instanceof Integer) {
+//				this.value = value;
+//				break;
+//			} else { 
+//				throw new IllegalArgumentException("Type mismatch 1.");
+//			}
+//		case DOUBLE:
+//			if (value instanceof Double || value instanceof Float) {
+//				this.value = value;
+//				break;
+//			} else { 
+//				throw new IllegalArgumentException("Type mismatch 2.");
+//			}
+//		case STRING:
+//			if (value instanceof String) {
+//				this.value = value;
+//				break;
+//			} else {
+//				throw new IllegalArgumentException("Type mismatch 3 .");
+//			}
+//		default:
+//			break;
+//		}
+//	}
+//	
+//	/**
+//	 * Returns variable's value */
+// 	public Object getValue() {
+// 		if (this.value != null) {
+//	 		switch (this.type) {
+//	 		case INT:
+//	 			return (Integer) this.value;
+//	 		case DOUBLE:
+//	 			return (Double) this.value;
+//	 		case STRING:
+//	 			return (String) this.value;
+//	 		default:
+//	 			return null;
+//	 		}
+// 		} else throw new SemanticException(this.id+" has not been initialized.");
+// 	}
 	
  	public boolean isInitialized() {
 		return initialized;

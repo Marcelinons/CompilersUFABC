@@ -1,3 +1,9 @@
+/**
+ * Comando While.
+ * 
+ * A expressao de condicao de parada deve ser uma de INT ou Double.
+ * */
+
 package compiler.core.ast;
 
 import java.util.List;

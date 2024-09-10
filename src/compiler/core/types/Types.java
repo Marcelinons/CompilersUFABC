@@ -1,6 +1,10 @@
 package compiler.core.types;
 
 public enum Types {
+	/**
+	 * Tipos de variaveis.
+	 * */
+	
 	INT(1),
 	DOUBLE(2),
 	STRING(3);

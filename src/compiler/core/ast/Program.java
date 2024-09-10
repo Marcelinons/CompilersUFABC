@@ -1,3 +1,9 @@
+/**
+ * Principal classe do programa.
+ * 
+ * 
+ * */
+
 package compiler.core.ast;
 
 import compiler.core.types.Types;
@@ -8,11 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Program {
-	private String name;
-	private HashMap<String, Variable> symbolTable;
-	private List<Command> commandList;
+	private String name;							// Nome do programa (ou nome da Classe em java)
+	private HashMap<String, Variable> symbolTable;  // Mapa de simbolos (lista de variaveis)
+	private List<Command> commandList;				// Lista de comandos
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -33,12 +38,17 @@ public class Program {
 	}
 	
 	public String generateTarget() {
+		/* Gera o corpo do codigo: imports, packages, nome de classe.
+		 * */
+		
 		StringBuilder str = new StringBuilder();
 		str.append("import java.util.Scanner;\n");
 				
 		str.append("public class "+this.name+" { \n");
 		str.append("  public static void main(String[] args) { \n");
 		str.append("  Scanner _scInpt = new Scanner(System.in);\n");
+		
+		// Declaracao de variaveis
 		for (String id: symbolTable.keySet()) {
 			Variable var = symbolTable.get(id);
 			if (var.getType() == Types.INT) {
@@ -50,9 +60,9 @@ public class Program {
 			}
 			str.append(var.getId()+";\n");
 		}
-		
+		// Comandos da lista
 		for (Command cmd: commandList) {
-			str.append("  "+cmd.generateTarget());
+			str.append("    "+cmd.generateTarget());
 		}
 		
 		str.append("  }\n");

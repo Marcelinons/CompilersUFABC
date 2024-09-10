@@ -7,6 +7,7 @@ package compiler.core;
 	import compiler.core.types.*;
 	import compiler.core.ast.*;
 	import compiler.core.exceptions.*;
+	import compiler.core.expressions.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -49,6 +50,30 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTipo(ProjGramParser.TipoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipo(ProjGramParser.TipoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVarList(ProjGramParser.VarListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarList(ProjGramParser.VarListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCommand(ProjGramParser.CommandContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -56,6 +81,18 @@ public class ProjGramBaseListener implements ProjGramListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCommand(ProjGramParser.CommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCmdComment(ProjGramParser.CmdCommentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdComment(ProjGramParser.CmdCommentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

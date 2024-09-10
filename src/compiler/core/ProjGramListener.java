@@ -7,6 +7,7 @@ package compiler.core;
 	import compiler.core.types.*;
 	import compiler.core.ast.*;
 	import compiler.core.exceptions.*;
+	import compiler.core.expressions.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -36,6 +37,26 @@ public interface ProjGramListener extends ParseTreeListener {
 	 */
 	void exitDeclare_var(ProjGramParser.Declare_varContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipo(ProjGramParser.TipoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipo(ProjGramParser.TipoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#varList}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarList(ProjGramParser.VarListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#varList}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarList(ProjGramParser.VarListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#command}.
 	 * @param ctx the parse tree
 	 */
@@ -45,6 +66,16 @@ public interface ProjGramListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCommand(ProjGramParser.CommandContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProjGramParser#cmdComment}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdComment(ProjGramParser.CmdCommentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProjGramParser#cmdComment}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdComment(ProjGramParser.CmdCommentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProjGramParser#cmdAttrib}.
 	 * @param ctx the parse tree

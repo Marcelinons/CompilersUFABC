@@ -1,3 +1,9 @@
+/**
+ * Comando IF
+ * 
+ * O comando if deve receber como expressao apenas INT ou DOUBLE para realizar corretamente as comparações.
+ * */
+
 package compiler.core.ast;
 
 import java.util.List;
@@ -13,9 +19,9 @@ public class IfCommand extends Command {
 
 	public IfCommand(List<Command> trueList, List<Command> falseList, String expression) {
 		super();
-		this.trueList = trueList;
-		this.falseList = falseList;
-		this.expression = expression;
+		this.trueList = trueList;		// Lista de comandos em caso if = True
+		this.falseList = falseList;    	// Lista de comandos em caso if = false
+		this.expression = expression;   // Expressao de comparacao do IF
 	}
 
 	public List<Command> getTrueList() {

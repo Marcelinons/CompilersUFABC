@@ -1,3 +1,9 @@
+/**
+ * Comando de leitura do usuário.
+ * 
+ * Lê do usuario um valor que depende do tipo da varivel em questao.
+ * */
+
 package compiler.core.ast;
 
 import compiler.core.types.*;
