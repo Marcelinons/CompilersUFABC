@@ -42,6 +42,8 @@ public class Program {
 		 * */
 		
 		StringBuilder str = new StringBuilder();
+		str.append("package compiler.main;\n\n");
+		
 		str.append("import java.util.Scanner;\n");
 				
 		str.append("public class "+this.name+" { \n");

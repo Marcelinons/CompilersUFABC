@@ -1,5 +1,5 @@
 PROGRAM leProgram
-	LET INT a;
+	LET INT a, count;
 	LET DOUBLE b;
 	LET STRING c, d;
 	LET DOUBLE exemplo;
@@ -7,7 +7,8 @@ BEGIN
 	-- "Tres tipos de variaveis: INT, DOUBLE, STRING ^" 
 	
 	-- "Atribuicao de variaveis:"
-	a = 3+4;
+	
+	a = 3 + 4;
 	b = 2.442 - 44.1 * -3;
 	c = "Hello World!";
 	
@@ -22,15 +23,17 @@ BEGIN
 	
 	-- "Atribuicao com varios tipos -> String "
 	-- "prevalece sobre double, que prevalece sobre int"
-	c = b + 3 - 2 * "  + Oieee ";
+	c = b + 3 - 2 * " + Oieee ";
 	
 	-- "Concatenado no todo para evitar erro do Java em casos de ''STRING'' - ''STRING''..."
-	print(c);
+	print("Valor de c: ");
+	println(c);
 	
 	-- "Comando de leitura"
 	
 	print("Insira um valor inteiro para a: ");
 	read(a);
+	
 	println("");
 	print("Valor lido de a:");
 	println(a);
@@ -39,36 +42,45 @@ BEGIN
 	-- "Comando IF"
 	
 	if (a < b) {
-		print("a é maior que b!");
-	} else {
 		println("b é maior que a!");
+	} else {
+		println("a é maior que b!");
 	} endif
 	
 	
 	-- "Comando While"
 
-	a = 0;
 	c = "Comando While! Numero par! ";
 	
 	println("------ Entrando no comando While! \n\n");
-	while (a < 10) {
-		if (a % 2 == 0) {
+	print("Insira um valor para a: ");
+	read(a);
+	println("");
+	print("Repetindo ");
+	print(a);
+	println(" vezes!");
+	
+	count = 0;
+	
+	while (count < a) {
+		if (count % 2 == 0) {
 			println(c);
 		} else {
-			print(a);
+			print(count);
 			println(" é um número ímpar.");
 		} endif
-		a = a + 1;	
+		count = count + 1;	
 	}
+	
 	print("----- Fim do comando While!\n\n");
 	
 	-- "Para dar erro: variavel nao declarada"
 	
-	-- "  print(nao_declarada)"
+	-- "print(naoDeclarada);"
 	
 	-- "Para dar erro: variavel nao inicializada"
 	
-	-- "  read(nao_inicializada)"
+	-- "print(d);"
 	
 	
 END

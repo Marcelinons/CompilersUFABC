@@ -27,7 +27,7 @@ public class CommentaryCmd extends Command {
 	@Override
 	public String generateTarget() {
 		StringBuilder str = new StringBuilder();
-		str.append("// " + expression + "\n");
+		str.append("// " + expression + "\n\n");
 		return str.toString();
 	}
 	

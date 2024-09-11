@@ -130,7 +130,7 @@ varList
 		{   // Validar se ja foi declarada
 			if (isDeclared(_input.LT(-1).getText())) {
 				throw new RuntimeException(_input.LT(-1).getText()+" has already been declared.");
-			} else {currentDecl.add(new Variable(_input.LT(-1).getText()));}
+			} else { currentDecl.add(new Variable(_input.LT(-1).getText())); }
 	    } 
 	  	(VIRG ID 	
 			{   // Validar se ja foi declarada
@@ -344,7 +344,7 @@ term
 		STRING 
 		{
 			if ( rightType == null ) {
-			rightType = Types.STRING;
+				rightType = Types.STRING;
 			} else if (rightType.getValue() < Types.STRING.getValue()) { 
 				rightType = Types.STRING;
 			}
@@ -353,7 +353,7 @@ term
     	
 expression_md	
     : 	(
-		(SUM | MUL | DIV | SUB | MOD) 
+		(SUM | MUL | DIV | SUB | RESTO) 
 		{ 
 			BinaryExpression binExp = new BinaryExpression(_input.LT(-1).getText().charAt(0));
 			binExp.setLeftSide(exprStack.pop());
@@ -407,7 +407,7 @@ DIV			: '/'
 MUL			: '*'
 			;
 
-MOD			: '%'
+RESTO		: '%'
 			;
 
 ID			: [a-z] ( [a-z] | [A-Z] | [0-9] )*		
