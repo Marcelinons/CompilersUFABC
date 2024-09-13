@@ -1,7 +1,11 @@
-# CompilersUFABC
-## Repository for the final project of the Compilers course at UFABC, 2024.
+# Compiladores UFABC
+## Repositório do projeto de Compiladores. UFABC, 2o Quadrimestre de 2024
+### Autores
+> Nicolas Marcelino da Silva  | 11202021107
+> Wellington Pereira Trindade | 
 
-#### Project Description:
+
+#### Descrição do projeto:
 
 > Criação de um analisador léxico / semântico utilizando Antlr.
 > A partir disso, usar um code generator para transformar código na  linguagem criada em um código JAVA que possa ser
