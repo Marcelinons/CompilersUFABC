@@ -2,6 +2,7 @@
 ## Repositório do projeto de Compiladores. UFABC, 2o Quadrimestre de 2024
 ### Autores
 > Nicolas Marcelino da Silva  | 11202021107
+
 > Wellington Pereira Trindade | 
 
 
