@@ -10,5 +10,4 @@ compilado e corretamente executado
 > Link do vídeo: https://www.youtube.com/watch?v=mL_cESsfK7s 
 
 #### Checklist:
-
-![REQUISITOS PROJETO](https://github.com/user-attachments/assets/66716014-2741-49f8-9e64-94aaff88fbff)
+![Projeto de Compiladores](https://github.com/user-attachments/assets/0a9784cb-3772-48ef-b332-39751e16cbfd)
